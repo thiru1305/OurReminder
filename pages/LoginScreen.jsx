@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Colors } from '../colors/Colors';
 import { useFonts } from "expo-font";
-
 import { Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import { Poppins_400Regular } from "@expo-google-fonts/poppins"
 import CustomButton from '../components/CustomButton';

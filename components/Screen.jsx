@@ -5,13 +5,6 @@ import { Colors } from '../colors/Colors';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-if(Platform.OS === "android") {
-
-}
-else if(Platform.OS === "ios") {
-
-}
-
 const Screen = ({
   children,
   width = screenWidth,

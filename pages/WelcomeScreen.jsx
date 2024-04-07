@@ -1,8 +1,6 @@
 import React from "react";
 import Screen from "../components/Screen";
 import { StyleSheet, Image, Button, View, Dimensions, Text } from "react-native";
-import { Colors } from "../colors/Colors";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomButton from "../components/CustomButton";
 import { useFonts } from "expo-font";
 
@@ -10,9 +8,6 @@ import { Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import { Poppins_400Regular } from "@expo-google-fonts/poppins"
 
 const imgWidth = Dimensions.get('screen').width;
-
-const buttonWidth = Dimensions.get("window").width;
-// const screenHeight = Dimensions.get('window').height;
 
 const WelcomeScreen = ({ navigation }) => {
 
@@ -48,32 +43,28 @@ const WelcomeScreen = ({ navigation }) => {
         </Text>
         
         
-        
         <View style={{
             top: 10,
             marginTop: 20
         }}>
             <CustomButton 
                 title={"Get Start"} 
-                iconName={"arrow-right-alt"} 
+                // iconName={"arrow-right-alt"} 
                 onPress={() => navigation.navigate("RegistrationScreen")} 
                 style={{
                     width: 200,
                     borderRadius: 20,
                     justifyContent: "center",
-                    // textAlign: "center",
+                    textAlign: "center",
                     alignItems: "center",
+                    fontFamily: "Poppins_400Regular"
                 }}
             />
 
         </View>
     
-        
-
         </Screen>
         
-
-      
     )
 
 }

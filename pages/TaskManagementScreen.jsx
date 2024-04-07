@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert, } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { collection, addDoc, updateDoc, deleteDoc, getDocs, doc, query, where, getDoc } from "firebase/firestore"; 
 import { db } from '../firebase';
 import authService from '../authService';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Checkbox from "expo-checkbox"
 import { useFonts } from "expo-font";
-
-
-
 import { Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import { Poppins_400Regular } from "@expo-google-fonts/poppins"
 import { Colors } from '../colors/Colors';
@@ -96,8 +93,7 @@ const TaskManagementScreen = ({ navigation }) => {
           setEditNoteId("");
           console.log("Note updated successfully");
           Alert.alert("Edit Note", "Note updated successfully");
-          
-          // Refetch notes after editing
+
           fetchData();
         } else {
           console.error("You don't have permission to edit this note.");
@@ -174,26 +170,25 @@ const TaskManagementScreen = ({ navigation }) => {
         <Checkbox
           style={{ margin: 8 }}
           value={item.completed ? true : false}
-          // onValueChange={setChecked}
           onValueChange={() => handleToggleCompletion(item.id)}
-          
           color={item.completed ? '#16B862' : undefined}
         />
-
       </View>
-      <Text style={{
-        fontFamily: "Poppins_400Regular",
-        fontSize: 12,
-      }}>{item.text}</Text>
-      <View style={styles.buttons}>
-        <Icon name='file-document-edit-outline' size={20} onPress={() => { setEditMode(true); setNewNote(item.text); setEditNoteId(item.id); }} />
-        <Icon name="delete-outline" size={20} onPress={() => handleDeleteNote(item.id)}/>
+      <View style={styles.noteContainer}>
+        <Text style={styles.noteText}>{item.text}</Text>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={() => { setEditMode(true); setNewNote(item.text); setEditNoteId(item.id); }}>
+            <Icon name='file-document-edit-outline' size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
+            <Icon name="delete-outline" size={20} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 
   return (
-
     <View style={{
       flex: 1,
     }}>
@@ -231,7 +226,6 @@ const TaskManagementScreen = ({ navigation }) => {
         textAlign: "center",
         fontSize: 12,
         padding: 10,
-        // marginTop: 50
       }}/>
 
       </View>
@@ -245,7 +239,6 @@ const TaskManagementScreen = ({ navigation }) => {
         />
         {editMode ? (
           <Button title="Update" onPress={handleEditNote} />
-          // <Icon name='file-document-edit-outline' onPress={handleEditNote} />
         ) : (
           <Button title="Add Note" onPress={handleAddNote} />
         )}
@@ -278,9 +271,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   item: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
@@ -291,9 +282,25 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     marginRight: 10,
   },
+  noteContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  noteText: {
+    flex: 1,
+    fontFamily: "Poppins_400Regular",
+    fontSize: 12,
+    textAlign: "left",
+  },
   buttons: {
     flexDirection: 'row',
     alignItems: "center",
+  },
+  flatList: {
+    marginTop: 10,
+    paddingBottom: 50,
   },
 });
 
