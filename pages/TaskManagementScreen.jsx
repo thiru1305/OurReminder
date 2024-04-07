@@ -31,9 +31,6 @@ const TaskManagementScreen = ({ navigation }) => {
         console.error("Current user not found.");
         return;
       }
-      console.log("currentuser", currentUser);
-      console.log("currentuser", currentUser.displayName);
-      console.log("currentuser", currentUser.email);
 
       setUser({
         displayName: currentUser.displayName,
