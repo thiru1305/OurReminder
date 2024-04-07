@@ -37,7 +37,6 @@ const RegistrationScreen = ({ navigation }) => {
           await authService.register(email, password, fullName);
           Alert.alert('Success', 'Registration successful!');
 
-          // Log in the user after successful registration
           await authService.login(email, password);
 
           navigation.navigate("TaskManagementScreen");
