@@ -1,5 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { app } from './firebase';
+import { Alert } from 'react-native';
 
 const authService = {
   register: async (email, password, fullName) => {
@@ -38,6 +39,15 @@ const authService = {
         resolve(user);
       }, reject);
     });
+  },
+  reset: async (email) => {
+    try {
+      const auth = getAuth(app);
+      await sendPasswordResetEmail(auth, email);
+      
+    } catch (error) {
+      throw error;
+    }
   },
 };
 

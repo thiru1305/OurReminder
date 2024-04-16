@@ -12,12 +12,12 @@ import authService from '../authService';
 
 const validationSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+//   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
 });
 
 const imgWidth = Dimensions.get('screen').width;
 
-const LoginScreen = ({ navigation }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
     const [fontsLoaded] = useFonts({
         Montserrat_400Regular,
         Poppins_400Regular
@@ -26,27 +26,26 @@ const LoginScreen = ({ navigation }) => {
         return <Text>Loading...</Text>;
     }
 
-    const handleLogin = async (values) => {
-        const { email, password } = values;
-        try {
-          await authService.login(email, password);
-          Alert.alert('Success', 'Login successful!');
 
-          navigation.navigate("TaskManagementScreen");
-     
+    const handleResetPassword = async (values) => {
+        const { email } = values;
+        try {
+            await authService.reset(email);
+            Alert.alert('Success', 'Password reset email sent!');
+            navigation.navigate("LoginScreen");
         } catch (error) {
-          Alert.alert('Error', error.message);
+            Alert.alert('Error', error.message);
         }
-      };
+    };
 
   return (
     <Screen>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: '', }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           // Handle form submission here
-          handleLogin(values);
+          handleResetPassword(values);
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
@@ -83,30 +82,18 @@ const LoginScreen = ({ navigation }) => {
             />
             {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
 
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              placeholder="Enter your password"
-              secureTextEntry
-            />
-            {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
-
 
             <View style={{
                 marginTop: 30,
-                // width: "100%",
-                // flex: 1,
             }}>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
               // flex: 1,
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("ForgotPasswordScreen")}
+            onPress={() => navigation.navigate("")}
             >
             <Text style={{
               fontFamily: "Poppins_400Regular",
@@ -115,21 +102,20 @@ const LoginScreen = ({ navigation }) => {
             }}>Forgot Password</Text>
 
 
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <CustomButton title="Sign In" onPress={handleSubmit}
+            <CustomButton title="Reset Password" onPress={handleSubmit}
               style={{
                 width: 315,
                 borderRadius: 20,
                 justifyContent: "center",
                 textAlign: "center",
-                alignItems: "center",
-                fontFamily: "Poppins_400Regular",
+                alignItems: "center"
               }}
             />
 
             </View>
-
+{/* 
             <View style={{
                 flexDirection: "row",
                 marginTop: 20
@@ -149,7 +135,7 @@ const LoginScreen = ({ navigation }) => {
 
                 </TouchableOpacity>
 
-            </View>
+            </View> */}
 
           </>
         )}
@@ -184,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
